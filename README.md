@@ -1,30 +1,55 @@
-# React + TypeScript + Vite
+# Proyecto de Juego en React + TypeScript
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Este proyecto es un juego simple implementado en React utilizando TypeScript. A continuación, se presentan las instrucciones para implementar y ejecutar el proyecto localmente, así como la documentación del código.
 
-Currently, two official plugins are available:
+### Prerequisitos
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Antes de comenzar, asegúrate de tener instalados los siguientes programas en tu computadora:
 
-## Expanding the ESLint configuration
+- **Node.js**: [Descargar Node.js](https://nodejs.org/)
+- **npm** (que se incluye con Node.js): Para manejar las dependencias del proyecto.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+### Instrucciones para Ejecutar el Proyecto
 
-- Configure the top-level `parserOptions` property like this:
+## 1. Clonación de archivos
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json', './tsconfig.app.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
+Debe clonar el siguiente repositorio: https://github.com/javxdev/juego-interactivo.git
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+## 2. Instalar Dependencias
+
+Una vez clonado el repositorio, abre la carpeta donde está guardado el proyecto con visual studio code o tu editor de código de preferencia.
+Hecho esto, instala las dependencias del proyecto utilizando el siguiente comando:
+
+npm install
+
+## Por último, para iniciar la aplicación, usa el siguiente comando:
+
+npm run dev
+
+# Documentación del Código
+
+## App.tsx
+
+Contiene el componente principal de la aplicación. Aquí se manejan:
+
+- El estado del juego.
+- El canvas para representar el juego.
+- Los eventos de clic del usuario.
+
+## game.ts
+
+Aquí se define el estado inicial del juego y se implementan funciones para actualizar el estado y comprobar los clics. Las funciones son:
+
+### `initialState`
+Define el estado inicial del juego, que incluye:
+- La puntuación del jugador.
+- La posición de la bola.
+
+### `updateGameState`
+Genera nuevas coordenadas para la bola dentro de un área delimitada. Limita su aparición a un 10% del margen inferior.
+
+### `increaseScore`
+Incrementa la puntuación del jugador en uno.
+
+### `checkClick`
+Comprueba si el clic del ratón está dentro del área de la bola.
