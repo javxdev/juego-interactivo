@@ -11,11 +11,12 @@ export const initialState: GameState = {
 export const updateGameState = (state: GameState): GameState => {
     const heightLimit = window.innerHeight * 0.7
     const topMargin = window.innerHeight - heightLimit
+    const bottomMargin = window.innerHeight * 0.05;
 
     return {
         ...state,
         targetX: Math.random() * (window.innerWidth - state.targetSize * 2) + state.targetSize,
-        targetY: Math.random() * (heightLimit - state.targetSize) + topMargin + state.targetSize,
+        targetY: Math.random() * (heightLimit - bottomMargin - state.targetSize) + topMargin + state.targetSize,
         targetSize: Math.max(20, 50 - state.score),
     }
 }
