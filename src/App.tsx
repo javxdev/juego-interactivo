@@ -1,17 +1,61 @@
+import { useRef, useEffect, useState } from 'react'
+import { GameState } from './types'
+import { initialState, updateGameState, increaseScore, checkClick, draw } from './game'
 
-function App() {
+const App = () => {
+    const [gameState, setGameState] = useState<GameState>(initialState)
+    const canvasRef = useRef<HTMLCanvasElement>(null)
 
-  return (
-    <>
-      <header className="max-w-3xl mx-auto pt-40 pb-10">
-        <p className='text-3xl text-gray-200 uppercase'>Juego interactivo - TypeScript</p>
-      </header>
+    const handleClick = (event: React.MouseEvent<HTMLCanvasElement>) => {
+        if (checkClick(event, gameState)) {
+            const newState = increaseScore(gameState)
+            setGameState(updateGameState(newState))
+        }
+    };
 
-      <div className="max-w-3xl mx-auto py-10">
-        <p className='text-3xl text-gray-200 uppercase'>TEST</p>
-      </div>
-    </>
-  )
+    useEffect(() => {
+        const canvas = canvasRef.current
+        if (!canvas) return
+
+        canvas.width = window.innerWidth
+        canvas.height = window.innerHeight
+
+        const context = canvas.getContext('2d')
+        if (!context) return
+
+        draw(context, gameState)
+
+        const intervalId = setInterval(() => {
+            setGameState((prevState) => updateGameState(prevState))
+        }, 2000);
+
+        return () => {
+            clearInterval(intervalId)
+        }
+    }, [gameState])
+
+    const resetGame = () => {
+        setGameState(initialState)
+    }
+
+    return (
+        <div className="flex flex-col h-screen">
+            <div className="fixed top-0 left-0 p-2 z-10 space-y-1">
+                <p className='text-white'>Puntuación: {gameState.score}</p>
+                <button
+                    type='button'
+                    className='p-2 uppercase text-xs font-bold text-gray-200 bg-yellow-600 w-full'
+                    onClick={resetGame}
+                >Reiniciar</button>
+            </div>
+
+            <canvas
+                ref={canvasRef}
+                onClick={handleClick}
+                className="block flex-grow h-[80dvh] mt-auto bg-slate-950"
+            />
+        </div>
+    )
 }
 
-export default App
+export default App;
